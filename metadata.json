@@ -1,0 +1,14 @@
+{
+  "name": "unibet-go",
+  "version": "0.1.0",
+  "author": "unibet",
+  "summary": "A puppet module to manage Thoughtworks Go server and agent",
+  "license": "Apache 2.0",
+  "source": "git@gitlab.unibet.com:techdev/puppet-go.git",
+  "project_page": "http://gitlab.unibet.com/techdev/puppet-go",
+  "issues_url": "http://gitlab.unibet.com/techdev/puppet-go/issues",
+  "dependencies": [
+    {"version_requirement":">= 1.0.0","name":"puppetlabs-stdlib"}
+  ]
+}
+

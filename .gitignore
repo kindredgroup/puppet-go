@@ -1,0 +1,6 @@
+*.lock
+.gems/
+.bundle/
+.librarian/
+.tmp/
+spec/fixtures/
