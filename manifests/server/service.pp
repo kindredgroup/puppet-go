@@ -5,7 +5,14 @@ class go::server::service {
       Service[$::go::server::params::service_name] {
         ensure    => $::go::server::service_ensure,
         enable    => $::go::server::service_enable,
-        subscribe => Class['::go::server::package']
+      }
+      if $::go::server::service_refresh {
+        Service[$::go::server::params::service_name] {
+          subscribe => [
+            Class['::go::server::package'],
+            Class['::go::server::config']
+          ]
+        }
       }
     }
     absent: {

@@ -1,10 +1,26 @@
 # MANAGED BY PUPPET
-GO_SERVER_PORT=<%= scope.lookupvar('::go::server::server_port') %>
+GO_SERVER_PORT=<%= @server_port %>
 export GO_SERVER_PORT
-GO_SERVER_SSL_PORT=<%= scope.lookupvar('::go::server::server_ssl_port') %>
+GO_SERVER_SSL_PORT=<%= @server_ssl_port %>
 export GO_SERVER_SSL_PORT
-SERVER_WORK_DIR=<%= scope.lookupvar('::go::server::lib_directory') %>
+SERVER_WORK_DIR=<%= @lib_directory %>
 export SERVER_WORK_DIR
+<%- if @server_mem != nil -%>
+SERVER_MEM=<%= @server_mem %>
+export SERVER_MEM
+<%- end -%>
+<%- if @server_max_mem != nil -%>
+SERVER_MAX_MEM=<%= @server_max_mem %>
+export SERVER_MAX_MEM
+<%- end -%>
+<%- if @server_min_perm_gen != nil -%>
+SERVER_MIN_PERM_GEN=<%= @server_min_perm_gen %>
+export SERVER_MIN_PERM_GEN
+<%- end -%>
+<%- if @server_max_perm_gen != nil -%>
+SERVER_MAX_PERM_GEN=<%= @server_max_perm_gen %>
+export SERVER_MAX_PERM_GEN
+<%- end -%>
 DAEMON=Y
-JAVA_HOME=<%= scope.lookupvar('::go::server::java_home') %>
+JAVA_HOME=<%= @java_home %>
 export JAVA_HOME
