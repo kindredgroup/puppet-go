@@ -1,0 +1,10 @@
+# MANAGED BY PUPPET
+GO_SERVER_PORT=<%= scope.lookupvar('::go::server::server_port') %>
+export GO_SERVER_PORT
+GO_SERVER_SSL_PORT=<%= scope.lookupvar('::go::server::server_ssl_port') %>
+export GO_SERVER_SSL_PORT
+SERVER_WORK_DIR=<%= scope.lookupvar('::go::server::lib_directory') %>
+export SERVER_WORK_DIR
+DAEMON=Y
+JAVA_HOME=<%= scope.lookupvar('::go::server::java_home') %>
+export JAVA_HOME

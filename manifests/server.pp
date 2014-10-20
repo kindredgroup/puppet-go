@@ -4,7 +4,13 @@ class go::server (
   $service_enable     = true,
   $package_from_repo  = false,
   $package_name       = $::go::server::params::package_name,
-  $package_version    = $::go::server::params::package_version
+  $package_version    = $::go::server::params::package_version,
+  $lib_directory      = $::go::server::params::lib_directory,
+  $log_directory      = $::go::server::params::log_directory,
+  $config_directory   = $::go::server::params::config_directory,
+  $server_port        = $::go::server::params::server_port,
+  $server_ssl_port    = $::go::server::params::server_ssl_port,
+  $java_home          = $::go::server::params::java_home
 ) inherits ::go::server::params {
 
   # input validation
@@ -19,14 +25,14 @@ class go::server (
       anchor { '::go::server::begin': } ->
       class { '::go::server::user': } ->
       class { '::go::server::package': } ->
-      class { '::go::server::config': } ->
+      class { '::go::server::file': } ->
       class { '::go::server::service': } ->
       anchor { '::go::server::end': }
     }
     absent: {
       anchor { '::go::server::begin': } ->
       class { '::go::server::service': } ->
-      class { '::go::server::config': } ->
+      class { '::go::server::file': } ->
       class { '::go::server::package': } ->
       class { '::go::server::user': } ->
       anchor { '::go::server::end': }
