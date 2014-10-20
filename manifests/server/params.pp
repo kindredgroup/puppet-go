@@ -14,10 +14,11 @@ class go::server::params {
     default: { fail("Unsupported operatingsystem: ${::operatingsystem}") }
   }
 
-  $server_version = '14.2.0-377'
   $service_name = 'go'
+  $package_name = 'go-server'
+  $package_version = '14.2.0-377'
 
-  $download_file_head = 'go-server-'
+  $download_file_head = 'go-server'
   $download_file_tail = "${package_arch}.${package_type}"
   $download_base_url = "http://download.go.cd/gocd-${package_type}"
 
