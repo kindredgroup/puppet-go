@@ -15,8 +15,8 @@ class go::server::params {
   }
 
   $server_version = '14.2.0-377'
+  $service_name = 'go'
 
-  #$package_file_name = "go-server-$go::server_version$package_arch.$package_type"
   $download_file_head = 'go-server-'
   $download_file_tail = "${package_arch}.${package_type}"
   $download_base_url = "http://download.go.cd/gocd-${package_type}"

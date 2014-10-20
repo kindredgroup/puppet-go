@@ -4,3 +4,4 @@
 .librarian/
 .tmp/
 spec/fixtures/
+*.swp
