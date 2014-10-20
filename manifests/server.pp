@@ -24,6 +24,21 @@ class go::server (
   validate_bool($service_enable)
   validate_bool($package_from_repo)
 
+  # input validation optional parameters
+  $memory_regex = '[0-9]+[gGmMkK]'
+  if $server_mem {
+    validate_re($server_mem, $memory_regex, "Invalid server_mem value ${server_mem}. Leave it off or set to ${memory_regex}")
+  }
+  if $server_max_mem {
+    validate_re($server_max_mem, $memory_regex, "Invalid server_max_mem value ${server_max_mem}. Leave it off or set to ${memory_regex}")
+  }
+  if $server_min_perm_gen {
+    validate_re($server_min_perm_gen, $memory_regex, "Invalid server_min_perm_gen value ${server_min_perm_gen}. Leave it off or set to ${memory_regex}")
+  }
+  if $server_max_perm_gen {
+    validate_re($server_max_perm_gen, $memory_regex, "Invalid server_max_perm_gen value ${server_max_perm_gen}. Leave it off or set to ${memory_regex}")
+  }
+
   # module resources
   case $ensure {
     present: {

@@ -8,6 +8,12 @@ describe 'go::server' do
       :provider => 'rpm',
       :source   => 'http://download.go.cd/gocd-rpm/go-server-14.2.0-377.noarch.rpm'
     ) }
+    it {
+      should_not contain_file('/etc/defaults/go-server').with_content(/SERVER_MEM=/)
+      should_not contain_file('/etc/defaults/go-server').with_content(/SERVER_MAX_MEM=/)
+      should_not contain_file('/etc/defaults/go-server').with_content(/SERVER_MIN_PERM_GEN=/)
+      should_not contain_file('/etc/defaults/go-server').with_content(/SERVER_MAX_PERM_GEN=/)
+    }
   end
 
   context 'with ensure => absent' do
@@ -15,6 +21,43 @@ describe 'go::server' do
       :ensure => 'absent'
     } end
     it { should compile }
+  end
+
+  context 'with service_refresh => false' do
+    let :params do {
+      :service_refresh => false
+    } end
+    it { should compile }
+    it { should contain_service('go-server').with(
+      :subscribe => nil
+    ) }
+  end
+
+  context 'with package_from_repo => true' do
+    let :params do {
+      :package_from_repo => true
+    } end
+    it { should compile }
+    it { should contain_package('go-server').with(
+      :source   => nil,
+      :provider => nil
+    ) }
+  end
+
+  context 'with server mem settings' do
+    let :params do {
+      :server_mem           => '1m',
+      :server_max_mem       => '2g',
+      :server_min_perm_gen  => '3k',
+      :server_max_perm_gen  => '4G'
+    } end
+    it { should compile }
+    it {
+      should contain_file('/etc/default/go-server').with_content(/SERVER_MEM=1m/)
+      should contain_file('/etc/default/go-server').with_content(/SERVER_MAX_MEM=2g/)
+      should contain_file('/etc/default/go-server').with_content(/SERVER_MIN_PERM_GEN=3k/)
+      should contain_file('/etc/default/go-server').with_content(/SERVER_MAX_PERM_GEN=4G/)
+    }
   end
 
 end
