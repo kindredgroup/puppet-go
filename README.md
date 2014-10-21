@@ -15,33 +15,36 @@
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+This module manages the life cycle of the continous delivery platform Go
+provided by Thoughtworks. It aims to be self contained and only focuses
+on managing the core functionality of Go. Tested on Redhat OS family
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
+Scope of the functionality provided by this module
 
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+* Server
+** Manage daemon user
+** Manage yum repository
+** Manage package installation
+** Manage service state
+** Manage Go configuration directives such as heap allocation, path to lib and log directories
+
 
 ## Setup
 
 ### What go affects
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
+* Server
+** User and group 'go'
+** (if osfamily redhat) yum repository Thoughtworks
+** Package go-server
+** Service go-server
+** Warning: force mode will destroy all resources managed by Go when setting ensure => absent
 
 ### Setup Requirements **OPTIONAL**
 
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
+No requirements apart from dependencies specified in metadata.json
 
 ### Beginning with go
 
@@ -53,24 +56,23 @@ for upgrading, you may wish to include an additional section here: Upgrading
 
 ## Usage
 
-Put the classes, types, and resources for customizing, configuring, and doing
-the fancy stuff with your module here.
+* Server
+** Class go::server
 
 ## Reference
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+See the code
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+Supported on osfamily Redhat, not tested on osfamily Debian
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
+"Since your module is awesome, other users will want to play with it. Let them
+know what the ground rules for contributing are."
+
+TBD
 
 ## Release Notes/Contributors/Etc **Optional**
 
