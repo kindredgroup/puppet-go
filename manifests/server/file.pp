@@ -5,6 +5,12 @@ class go::server::file {
     default => $::go::server::ensure
   }
 
+  if $directory_ensure == absent {
+    File {
+      force => $::go::server::force
+    }
+  }
+
   File {
     owner => $::go::server::params::user,
     group => $::go::server::params::group,

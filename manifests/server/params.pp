@@ -14,9 +14,12 @@ class go::server::params {
     default: { fail("Unsupported operatingsystem: ${::operatingsystem}") }
   }
 
+  $user = 'go'
+  $group = 'go'
+
   $service_name = 'go-server'
   $package_name = 'go-server'
-  $package_version = '14.2.0-377'
+  $package_version = present
 
   $lib_directory = '/var/lib/go-server'
   $log_directory = '/var/log/go-server'

@@ -3,11 +3,6 @@ describe 'go::server' do
 
   context 'with defaults for all parameters' do
     it { should compile }
-    it { should contain_package('go-server').with(
-      :ensure   => 'present',
-      :provider => 'rpm',
-      :source   => 'http://download.go.cd/gocd-rpm/go-server-14.2.0-377.noarch.rpm'
-    ) }
     it {
       should_not contain_file('/etc/defaults/go-server').with_content(/SERVER_MEM=/)
       should_not contain_file('/etc/defaults/go-server').with_content(/SERVER_MAX_MEM=/)
@@ -33,15 +28,12 @@ describe 'go::server' do
     ) }
   end
 
-  context 'with package_from_repo => true' do
+  context 'with manage_package_repo => true' do
     let :params do {
-      :package_from_repo => true
+      :manage_package_repo => true
     } end
     it { should compile }
-    it { should contain_package('go-server').with(
-      :source   => nil,
-      :provider => nil
-    ) }
+    it { should contain_yumrepo('Thoughtworks') }
   end
 
   context 'with server mem settings' do
