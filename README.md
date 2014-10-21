@@ -24,11 +24,11 @@ on managing the core functionality of Go. Tested on Redhat OS family
 Scope of the functionality provided by this module
 
 * Server
-** Manage daemon user
-** Manage yum repository
-** Manage package installation
-** Manage service state
-** Manage Go configuration directives such as heap allocation, path to lib and log directories
+  * Manage daemon user
+  * Manage yum repository
+  * Manage package installation
+  * Manage service state
+  * Manage Go configuration directives such as heap allocation, path to lib and log directories
 
 
 ## Setup
@@ -36,11 +36,11 @@ Scope of the functionality provided by this module
 ### What go affects
 
 * Server
-** User and group 'go'
-** (if osfamily redhat) yum repository Thoughtworks
-** Package go-server
-** Service go-server
-** Warning: force mode will destroy all resources managed by Go when setting ensure => absent
+  * User and group 'go'
+  * (if osfamily redhat) yum repository Thoughtworks
+  * Package go-server
+  * Service go-server
+  * Warning: force mode will destroy all resources managed by Go when setting ensure => absent
 
 ### Setup Requirements **OPTIONAL**
 
@@ -48,16 +48,17 @@ No requirements apart from dependencies specified in metadata.json
 
 ### Beginning with go
 
-The very basic steps needed for a user to get the module up and running.
-
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you may wish to include an additional section here: Upgrading
-(For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+Checkout the module to your puppet modules folder including dependencies or use librarian-puppet to take care that.
 
 ## Usage
 
+Puppet classes and defines exposed to the end user.
+
 * Server
-** Class go::server
+  * Class go::server
+
+The go module is contained using the anchor pattern, so you should be
+able to form reliable dependencies to class go::server for example.
 
 ## Reference
 
