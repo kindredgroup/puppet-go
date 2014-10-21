@@ -1,3 +1,7 @@
+# == Class: go::server::config
+#
+# Manages the go server configuration files
+#
 class go::server::config (
   $server_port          = $::go::server::server_port,
   $server_ssl_port      = $::go::server::server_ssl_port,

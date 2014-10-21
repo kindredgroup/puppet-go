@@ -1,3 +1,7 @@
+# == Class: go::repository
+#
+# Manages the go package repository
+#
 class go::repository {
 
   case $::operatingsystem {

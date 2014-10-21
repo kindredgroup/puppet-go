@@ -1,3 +1,7 @@
+# == Class: go::server::user
+#
+# Manages the go server user and group
+#
 class go::server::user {
 
   if $::go::server::manage_user {

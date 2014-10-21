@@ -1,3 +1,7 @@
+# == Class: go::server::package
+#
+# Manages the go server package
+#
 class go::server::package {
 
   if $::go::server::manage_package_repo {

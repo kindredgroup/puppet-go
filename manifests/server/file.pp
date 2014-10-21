@@ -1,3 +1,7 @@
+# == Class: go::server::file
+#
+# Manages go server related files
+#
 class go::server::file {
 
   $directory_ensure = $::go::server::ensure ? {
@@ -17,18 +21,18 @@ class go::server::file {
   }
     
   file { $::go::server::lib_directory:
-    ensure  => $directory_ensure,
-    mode    => '0700'
+    ensure => $directory_ensure,
+    mode   => '0700'
   }
 
   file { $::go::server::log_directory:
-    ensure  => $directory_ensure,
-    mode    => '0755'
+    ensure => $directory_ensure,
+    mode   => '0755'
   }
 
   file { $::go::server::config_directory:
-    ensure  => $directory_ensure,
-    mode    => '0700'
+    ensure => $directory_ensure,
+    mode   => '0700'
   }
 
 }

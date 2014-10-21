@@ -1,3 +1,7 @@
+# == Class: go::server::service
+#
+# Manages the go server daemon
+#
 class go::server::service {
 
   case $::go::server::ensure {
@@ -21,6 +25,7 @@ class go::server::service {
         enable => false
       }
     }
+    default: {}
   }
 
   service { $::go::server::params::service_name:
