@@ -5,8 +5,9 @@
 class go::server::package {
 
   if $::go::server::manage_package_repo {
-    class { '::go::repository':
-      before => Package[$::go::server::params::package_name]
+    include ::go::repository
+    Package[$::go::server::params::package_name] {
+      require => Class['::go::repository']
     }
   }
 

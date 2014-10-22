@@ -1,0 +1,14 @@
+# MANAGED BY PUPPET
+export GO_SERVER=<%= @go_server_host %>
+export GO_SERVER_PORT=<%= @go_server_port %>
+export JAVA_HOME=<%= @java_home %>
+export AGENT_WORK_DIR=<%= @work_dir %>
+<%- if @agent_mem != nil -%>
+export AGENT_MEM=<%= @agent_mem %>
+<%- end -%>
+<%- if @agent_max_mem != nil -%>
+export AGENT_MAX_MEM=<%= @agent_max_mem %>
+<%- end -%>
+export PATH
+DAEMON=Y
+VNC=N

@@ -1,0 +1,2 @@
+class go::agent::config {
+}

@@ -1,0 +1,6 @@
+# MANAGED BY PUPPET
+agent.auto.register.key=<%= @autoregister_key %>
+agent.auto.register.resources=<%= @autoregister_resources.join(',') %>
+<%- if @autoregister_env != nil -%>
+agent.auto.register.environments=<%- @autoregister_env -%>
+<%- end -%>

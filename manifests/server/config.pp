@@ -11,6 +11,8 @@ class go::server::config (
   $server_min_perm_gen  = $::go::server::server_min_perm_gen,
   $server_max_perm_gen  = $::go::server::server_max_perm_gen,
   $java_home            = $::go::server::java_home,
+  $autoregister         = $::go::server::autoregister,
+  $autoregister_key     = $::go::server::autoregister_key
 ) {
 
   file { $::go::server::params::default_file:
@@ -33,6 +35,7 @@ class go::server::config (
       line  => "log4j.appender.ShineFileAppender.File=${::go::server::log_directory}/go-server.log",
       match => '^log4j.appender.ShineFileAppender.File='
     }
+
   }
 
 }

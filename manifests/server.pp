@@ -33,10 +33,6 @@
 #   On teardown, remove directory trees
 #   Valid values: boolean
 #
-# [*package_name*]
-#   Allow override of the package name
-#   Valid values: string - name of package
-#
 # [*package_version*]
 #   Which version of package to install. Defaults to just 'present'
 #   Valid values: string - package type ensure
@@ -89,7 +85,6 @@ class go::server (
   $manage_package_repo  = false,
   $manage_user          = false,
   $force                = false,
-  $package_name         = $::go::server::params::package_name,
   $package_version      = $::go::server::params::package_version,
   $lib_directory        = $::go::server::params::lib_directory,
   $log_directory        = $::go::server::params::log_directory,
@@ -100,7 +95,9 @@ class go::server (
   $server_mem           = undef,
   $server_max_mem       = undef,
   $server_min_perm_gen  = undef,
-  $server_max_perm_gen  = undef
+  $server_max_perm_gen  = undef,
+  $autoregister         = false,
+  $autoregister_key     = undef
 ) inherits ::go::server::params {
 
   # input validation
@@ -132,6 +129,7 @@ class go::server (
       class { '::go::server::package': } ->
       class { '::go::server::file': } ->
       class { '::go::server::config': } ->
+      class { '::go::server::autoregister': } ->
       class { '::go::server::service': } ->
       anchor { '::go::server::end': }
     }
