@@ -17,7 +17,7 @@
 
 This module manages the life cycle of the continous delivery platform Go
 provided by Thoughtworks. It aims to be self contained and only focuses
-on managing the core functionality of Go. Tested on Redhat OS family
+on managing the core functionality of Go. Tested on Redhat OS family.
 
 ## Module Description
 
@@ -29,7 +29,17 @@ Scope of the functionality provided by this module
   * Manage package installation
   * Manage service state
   * Manage Go configuration directives such as heap allocation, path to lib and log directories
+  * Autoregistration key in cruise-config.xml
 
+* Agent
+  * Manage service state
+  * Manage package installation
+  * Manage individual instances
+    * Service
+    * User
+    * Home directory
+    * Autoregistration
+    * Memory allocation
 
 ## Setup
 
@@ -42,9 +52,15 @@ Scope of the functionality provided by this module
   * Service go-server
   * Warning: force mode will destroy all resources managed by Go when setting ensure => absent
 
+* Agent
+  * User and group *configurable*
+  * Package go-agent
+  * Service *configurable*
+
 ### Setup Requirements **OPTIONAL**
 
-No requirements apart from dependencies specified in metadata.json
+Go depends on JDK to be installed in order to run, which is out of scope for the Go module.
+See: http://www.thoughtworks.com/products/docs/go/current/help/system_requirements.html
 
 ### Beginning with go
 
@@ -56,6 +72,9 @@ Puppet classes and defines exposed to the end user.
 
 * Server
   * Class go::server
+* Agent
+  * Class go::agent
+  * Define go::agent::instance
 
 The go module is contained using the anchor pattern, so you should be
 able to form reliable dependencies to class go::server for example.
@@ -70,10 +89,7 @@ Supported on osfamily Redhat, not tested on osfamily Debian
 
 ## Development
 
-"Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are."
-
-TBD
+Pull requests are welcomed
 
 ## Release Notes/Contributors/Etc **Optional**
 
