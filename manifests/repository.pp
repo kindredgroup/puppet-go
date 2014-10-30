@@ -4,8 +4,8 @@
 #
 class go::repository {
 
-  case $::operatingsystem {
-    centos, redhat: {
+  case $::osfamily {
+    redhat: {
       yumrepo { 'Thoughtworks':
         descr       => 'Thoughtworks Yum Repository',
         enabled     => '1',
@@ -16,10 +16,23 @@ class go::repository {
         priority    => '99'
       }
     }
-    debian, ubuntu: {
+    debian: {
+      file { '/etc/apt/sources.list.d/thoughtworks.list':
+        ensure  => file,
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        content => 'deb http://download.go.cd/gocd-deb/ /',
+      }
+      exec {'go_run_apt_get_update':
+        command     => 'apt-get update',
+        path        => ['/bin', '/usr/bin', '/sbin', '/usr/sbin'],
+        refreshonly => true,
+        subscribe   => File['/etc/apt/sources.list.d/thoughtworks.list']
+      }
     }
     default: {
-      fail("Unsupported operatingsystem ${::operatingsystem}")
+      fail("Unsupported osfamily ${::osfamily}")
     }
   }
 

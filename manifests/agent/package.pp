@@ -6,6 +6,11 @@ class go::agent::package {
 
   if $::go::agent::manage_package_repo {
     include ::go::repository
+    if $::osfamily == debian {
+      Package[$::go::agent::params::package_name] {
+        install_options => '--force-yes'
+      }
+    }
     Package[$::go::agent::params::package_name] {
       require => Class['::go::repository']
     }
