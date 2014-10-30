@@ -5,7 +5,6 @@
 1. [Overview](#overview)
 2. [Module Description - What the module does and why it is useful](#module-description)
 3. [Setup - The basics of getting started with go](#setup)
-    * [What go affects](#what-go-affects)
     * [Setup requirements](#setup-requirements)
     * [Beginning with go](#beginning-with-go)
 4. [Usage - Configuration options and additional functionality](#usage)
@@ -15,69 +14,53 @@
 
 ## Overview
 
-This module manages the life cycle of the continous delivery platform Go
-provided by Thoughtworks. It aims to be self contained and only focuses
-on managing the core functionality of Go. Tested on Redhat OS family.
+The go module manages the life cycle of the continous delivery platform Go
+provided by Thoughtworks. It aims for self containment and only focus on solving tasks surrounding the Go product with minimal external dependencies.
 
 ## Module Description
 
-Scope of the functionality provided by this module
-
-* Server
-  * Manage daemon user
-  * Manage yum repository
-  * Manage package installation
-  * Manage service state
-  * Manage Go configuration directives such as heap allocation, path to lib and log directories
-  * Autoregistration key in cruise-config.xml
-
-* Agent
-  * Manage service state
-  * Manage package installation
-  * Manage individual instances
-    * Service
-    * User
-    * Home directory
-    * Autoregistration
-    * Memory allocation
-
+Thoughtworks Go is a continuous delivery platform used for build, packaging and orchestrating application deployments. Go uses a server component for the administration, presentation and scheduling part, and an agent component responsible for carrying out the work. The Go module manages these concerns within separate named spaced classes.
 ## Setup
 
-### What go affects
+### Setup Requirements
 
-* Server
-  * User and group 'go'
-  * (if osfamily redhat) yum repository Thoughtworks
-  * Package go-server
-  * Service go-server
-  * Warning: force mode will destroy all resources managed by Go when setting ensure => absent
-
-* Agent
-  * User and group *configurable*
-  * Package go-agent
-  * Service *configurable*
-
-### Setup Requirements **OPTIONAL**
-
-Go depends on JDK to be installed in order to run, which is out of scope for the Go module.
+Go depends on JDK to be installed in order to run. This dependency must be managed outside of the Go module.
 See: http://www.thoughtworks.com/products/docs/go/current/help/system_requirements.html
+
+In addition, the Go module depends on functions provided by the puppetlabs-stdlib module
 
 ### Beginning with go
 
-Checkout the module to your puppet modules folder including dependencies or use librarian-puppet to take care that.
+#### Server
+```
+class { '::go::server':
+	manage_package_repo => true
+}
+```
 
+#### Agent
+```
+class { '::go::agent':
+	manage_package_repo	=> true
+} ->
+::go::agent::instance { 'agent1':
+	path 			=> '/opt/go',
+	go_server_host	=> 'localhost',
+	go_server_port	=> 8153
+}
+```
 ## Usage
 
-Puppet classes and defines exposed to the end user.
+The Go module exposes the following classes
 
-* Server
-  * Class go::server
-* Agent
-  * Class go::agent
-  * Define go::agent::instance
+* go::agent
+* go::server
 
-The go module is contained using the anchor pattern, so you should be
-able to form reliable dependencies to class go::server for example.
+It also exposes these defined types:
+
+* go::agent::instance
+
+The exposed classes are contained using the anchor pattern provided via puppetlabs-stdlib, thus you should be able to form reliable dependencies on these classes as expect all of its resources to be realized.
 
 ## Reference
 
@@ -85,14 +68,8 @@ See the code
 
 ## Limitations
 
-Supported on osfamily Redhat, not tested on osfamily Debian
+Tested and used on Redhat OS family, Debian support not confirmed.
 
 ## Development
 
-Pull requests are welcomed
-
-## Release Notes/Contributors/Etc **Optional**
-
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You may also add any additional sections you feel are
-necessary or important to include here. Please use the `## ` header.
+Pull requests are welcome

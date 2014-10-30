@@ -11,7 +11,7 @@
 #
 # === Copyright
 #
-# Copyright 2014 Your name here, unless otherwise noted.
+# Copyright 2014 North Development AB
 #
 class go {
 
