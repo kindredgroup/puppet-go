@@ -16,7 +16,8 @@ end
 
 group :kitchen do
   gem 'test-kitchen'
-  gem 'kitchen-vagrant'
+  #gem 'kitchen-vagrant'
+  gem 'kitchen-docker'
   gem 'kitchen-puppet', :git => 'https://github.com/neillturner/kitchen-puppet.git'
-  gem 'vagrant-wrapper'
+  #gem 'vagrant-wrapper'
 end
