@@ -1,3 +1,7 @@
+# == Class: go::agent::service
+#
+# agent service class
+#
 class go::agent::service {
 
   service { $::go::agent::params::service_name:

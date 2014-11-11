@@ -1,3 +1,7 @@
+# == Class: go::server::autoregister
+#
+# Manages server autoregistration
+#
 class go::server::autoregister {
 
   if $::go::server::autoregister {

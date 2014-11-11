@@ -133,7 +133,7 @@ define go::agent::instance (
   $work_dir = "${home}/go-agent"
 
   if $manage_user {
-    exec { "create_parent_dir_${name}": 
+    exec { "create_parent_dir_${name}":
       command => "mkdir -p ${path}",
       path    => ['/bin', '/usr/bin'],
       creates => $path
@@ -147,11 +147,11 @@ define go::agent::instance (
       }
     } else {
       user { $user:
-        ensure      => $user_ensure,
-        comment     => "Go agent user - Managed by puppet",
-        home        => $home,
-        gid         => $user,
-        managehome  => false
+        ensure     => $user_ensure,
+        comment    => 'Go agent user - Managed by puppet',
+        home       => $home,
+        gid        => $user,
+        managehome => false
       }
       group { $user:
         ensure  => $user_ensure,
@@ -222,10 +222,10 @@ define go::agent::instance (
   }
 
   service { $name:
-    ensure      => $service_ensure_real,
-    enable      => $service_enable,
-    hasrestart  => false,
-    hasstatus   => true
+    ensure     => $service_ensure_real,
+    enable     => $service_enable,
+    hasrestart => false,
+    hasstatus  => true
   }
 
 }
