@@ -6,3 +6,5 @@ RSpec.configure do |c|
     :operatingsystem  => 'RedHat'
   }
 end
+
+at_exit { RSpec::Puppet::Coverage.report! }

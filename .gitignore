@@ -8,3 +8,4 @@ spec/fixtures/
 .vagrant/
 .kitchen/
 .kitchen.local.yml
+reports/

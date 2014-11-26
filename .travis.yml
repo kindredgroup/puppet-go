@@ -1,0 +1,3 @@
+rvm: 1.9.3
+env:
+  - PUPPET_VERSION=3.7.3
