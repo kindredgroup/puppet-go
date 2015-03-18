@@ -62,9 +62,9 @@ describe 'go::agent::instance' do
       :autoregister_resources => ['resourceA', 'resourceB']
     } end
     it {
-      should contain_file('/opt/go/gouser/go-agent/autoregister.properties').with_content(/agent.auto.register.key=fookey\n/)
-      should contain_file('/opt/go/gouser/go-agent/autoregister.properties').with_content(/agent.auto.register.resources=resourceA,resourceB\n/)
-      should_not contain_file('/opt/go/gouser/go-agent/autoregister.properties').with_content(/agent.auto.register.environments=/)
+      should contain_file('/opt/go/gouser/go-agent/config/autoregister.properties').with_content(/agent.auto.register.key=fookey\n/)
+      should contain_file('/opt/go/gouser/go-agent/config/autoregister.properties').with_content(/agent.auto.register.resources=resourceA,resourceB\n/)
+      should_not contain_file('/opt/go/gouser/go-agent/config/autoregister.properties').with_content(/agent.auto.register.environments=/)
     }
   end
 

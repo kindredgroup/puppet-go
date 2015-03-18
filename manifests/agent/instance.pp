@@ -178,7 +178,7 @@ define go::agent::instance (
   }
 
   if $autoregister {
-    file { "${work_dir}/autoregister.properties":
+    file { "${work_dir}/config/autoregister.properties":
       ensure  => $ensure,
       owner   => $user,
       group   => $user,
@@ -186,7 +186,7 @@ define go::agent::instance (
       content => template("${module_name}/autoregister.properties.erb")
     }
     if $service_refresh {
-      File["${work_dir}/autoregister.properties"] {
+      File["${work_dir}/config/autoregister.properties"] {
         notify => Service[$name]
       }
     }
