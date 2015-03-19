@@ -178,6 +178,13 @@ define go::agent::instance (
   }
 
   if $autoregister {
+    file { "${work_dir}/config":
+      ensure  => $directory_ensure,
+      owner   => $user,
+      group   => $user,
+      mode    => $mode,
+      require => File[$work_dir]
+    } ->
     file { "${work_dir}/config/autoregister.properties":
       ensure  => $ensure,
       owner   => $user,

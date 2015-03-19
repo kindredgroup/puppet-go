@@ -9,3 +9,4 @@ spec/fixtures/
 .kitchen/
 .kitchen.local.yml
 reports/
+/pkg
