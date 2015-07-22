@@ -1,6 +1,8 @@
 # go
 
 [![Build Status](https://secure.travis-ci.org/unibet/puppet-go.png)](http://travis-ci.org/unibet/puppet-go)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/unibet/go.svg)](https://forge.puppetlabs.com/unibet/go)
+[![Puppet Forge](https://img.shields.io/puppetforge/f/unibet/go.svg)](https://forge.puppetlabs.com/unibet/go)
 
 #### Table of Contents
 
