@@ -3,7 +3,7 @@
   "version": "0.1.2",
   "author": "unibet",
   "summary": "Puppet module to manage Thoughtworks Go server and agent",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "source": "https://github.com/unibet/puppet-go.git",
   "project_page": "https://github.com/unibet/puppet-go",
   "issues_url": "https://github.com/unibet/puppet-go/issues",
