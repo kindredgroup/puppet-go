@@ -17,18 +17,24 @@ class go::repository {
       }
     }
     debian: {
-      file { '/etc/apt/sources.list.d/thoughtworks.list':
+      exec{'add_publickey_go':
+        command     => "wget --quiet -O - 'https://bintray.com/user/downloadSubjectPublicKey?username=gocd' | sudo apt-key add -",
+        path        => ['/bin', '/usr/bin', '/sbin', '/usr/sbin'],
+        refreshonly => true,
+        subscribe   => File['/etc/apt/sources.list.d/gocd.list'],
+      }
+      file { '/etc/apt/sources.list.d/gocd.list':
         ensure  => file,
         owner   => 'root',
         group   => 'root',
         mode    => '0644',
-        content => 'deb http://download.go.cd/gocd-deb/ /',
+        content => 'deb http://dl.bintray.com/gocd/gocd-deb/ /',
       }
       exec {'go_run_apt_get_update':
         command     => 'apt-get update',
         path        => ['/bin', '/usr/bin', '/sbin', '/usr/sbin'],
         refreshonly => true,
-        subscribe   => File['/etc/apt/sources.list.d/thoughtworks.list']
+        subscribe   => File['/etc/apt/sources.list.d/gocd.list'],
       }
     }
     default: {
