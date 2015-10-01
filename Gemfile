@@ -4,6 +4,7 @@ puppetversion = ENV.key?('PUPPET_VERSION') ? "= #{ENV['PUPPET_VERSION']}" : '3.7
 
 group :rspec, :kitchen do
   gem 'librarian-puppet', '2.1.0'
+  gem 'puppet_forge', '< 2.0.0'
   gem 'puppet', puppetversion
   gem 'rspec_junit_formatter'
   gem 'puppet-blacksmith'
@@ -16,10 +17,10 @@ group :rspec do
   gem 'rspec-puppet', :git => 'https://github.com/rodjek/rspec-puppet.git'
   gem 'puppet-syntax'
   gem 'metadata-json-lint'
+  gem 'rspec', '~> 3.3'
 end
 
 group :kitchen do
-  gem 'puppet_forge', '<= 1.0.2'
   gem 'test-kitchen'
   gem 'kitchen-puppet'
   gem 'kitchen-docker'
