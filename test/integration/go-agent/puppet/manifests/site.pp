@@ -10,6 +10,6 @@ class { '::go::agent':
 ::go::agent::instance { 'goinstance1':
   ensure          => present,
   path            => '/opt/go-instances',
-  go_server_host  => 'localhost',
+  go_server_host  => 'localhost.localdomain',
   go_server_port  => '8153'
 }

@@ -5,12 +5,11 @@ script:
   - bundle exec rake lint
   - bundle exec rake validate
   - bundle exec rake spec
-before_deploy:
-  - bundle exec rake clean
-  - bundle exec rake set_travis_version
 deploy:
-  skip_cleanup: true
   provider: puppetforge
+  on:
+    tags: true
+    branch: master
   user:
     secure: "rrRH3XUrsDYU7w5I9TAdnwKBVQL63k9iXwZgKgjCTnduypvM5Mv371Eds2wntWWoRCk4J4c0n6HRnelJdcHTp0WqgC4Esd/UOFLv2GyaltADAX0YPKU0XQfAm6AMfJL7uxDcqOKt6UPCiQJbEKVKRLm7H8+sgwhBPETxOCVXh0U="
   password:

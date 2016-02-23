@@ -23,7 +23,7 @@ end
 group :kitchen do
   gem 'test-kitchen'
   gem 'kitchen-puppet'
-  gem 'kitchen-docker'
+  gem 'kitchen-docker', '< 2.2.0'  # https://github.com/portertech/kitchen-docker/issues/148
   gem 'kitchen-vagrant'
   gem 'vagrant-wrapper'
 end

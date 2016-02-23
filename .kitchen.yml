@@ -1,8 +1,6 @@
 ---
 driver:
-  name: docker
-  use_sudo: false
-  socket: <%= ENV.fetch('DOCKER_HOST', 'unix:///var/run/docker.sock') %>
+  name: vagrant
 
 provisioner:
   name: puppet_apply
@@ -11,10 +9,19 @@ provisioner:
   require_chef_for_busser: true
 
 platforms:
-  - name: centos6
+  - name: centos-6.5-64-puppet
+    driver_plugin: vagrant
     driver_config:
-      image: jlyheden/kitchen-puppet:centos6
-      platform: centos
+      box: puppetlabs/centos-6.5-64-puppet
+  - name: centos7
+    driver_plugin: vagrant
+    driver_config:
+      box: centos/7
+  - name: vbox-ubuntu-server-12042
+    driver_plugin: vagrant
+    driver_config:
+      box: ubuntu-server-12042-x64-vbox4210
+      box_url: http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box
 
 suites:
   - name: go-server
