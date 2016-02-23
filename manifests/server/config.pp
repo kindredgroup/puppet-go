@@ -38,4 +38,12 @@ class go::server::config (
 
   }
 
+  if !$::go::server::manage_user {
+    file { '/var/go':
+      ensure => directory,
+      owner  => 'go',
+      group  => 'go'
+    }
+  }
+
 }

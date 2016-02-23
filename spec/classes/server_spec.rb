@@ -52,4 +52,30 @@ describe 'go::server' do
     }
   end
 
+  context 'with manage_user => false' do
+    let :params do {
+      :manage_user => false
+    } end
+    it {
+      should contain_file('/var/go').with(
+        :ensure => 'directory',
+        :owner  => 'go',
+        :group  => 'go'
+      )
+    }
+  end
+
+  context 'with manage_user => true' do
+    let :params do {
+      :manage_user => true
+    } end
+    it {
+      should_not contain_file('/var/go').with(
+        :ensure => 'directory',
+        :owner  => 'go',
+        :group  => 'go'
+      )
+    }
+  end
+
 end

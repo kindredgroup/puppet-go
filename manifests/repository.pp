@@ -7,12 +7,12 @@ class go::repository {
   case $::osfamily {
     redhat: {
       yumrepo { 'Thoughtworks':
-        descr       => 'Thoughtworks Yum Repository',
+        descr       => 'GoCD YUM Repository',
         enabled     => '1',
-        baseurl     => 'http://download.go.cd/gocd-rpm/',
+        baseurl     => 'https://download.go.cd',
         includepkgs => 'absent',
-        gpgcheck    => '0',
-        gpgkey      => 'absent',
+        gpgcheck    => '1',
+        gpgkey      => 'https://download.go.cd/GOCD-GPG-KEY.asc',
         priority    => '99'
       }
     }

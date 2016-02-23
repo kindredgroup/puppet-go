@@ -1,0 +1,4 @@
+source ENV['RUBYGEMS_MIRROR_URL'] ? ENV['RUBYGEMS_MIRROR_URL'] : 'https://rubygems.org'
+
+gem 'rspec', '~> 3.4'
+gem 'rspec-retry'
