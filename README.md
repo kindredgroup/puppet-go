@@ -72,7 +72,7 @@ See the code
 
 ## Limitations
 
-Tested and used on Redhat OS family, Debian support not confirmed.
+Tested and used on Redhat and Ubuntu. See metadata.json for supported OS combinations.
 
 ## Development
 
