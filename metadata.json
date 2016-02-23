@@ -1,6 +1,6 @@
 {
   "name": "unibet-go",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "author": "unibet",
   "summary": "Puppet module to manage Thoughtworks Go server and agent",
   "license": "Apache-2.0",
@@ -11,13 +11,22 @@
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "6"
+        "6",
+        "7"
       ]
     },
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "6"
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04",
+        "14.04"
       ]
     }
   ],
