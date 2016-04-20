@@ -232,7 +232,8 @@ define go::agent::instance (
     ensure     => $service_ensure_real,
     enable     => $service_enable,
     hasrestart => false,
-    hasstatus  => true
+    hasstatus  => true,
+    provider   => 'init',
   }
 
 }
