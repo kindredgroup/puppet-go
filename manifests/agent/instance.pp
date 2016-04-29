@@ -228,12 +228,20 @@ define go::agent::instance (
     content => template("${module_name}/go-agent-sh.erb")
   }
 
+  case $::osfamily {
+    redhat: {
+      Service[$name] {
+        provider => 'init'
+      }
+    }
+    default: {}
+  }
+
   service { $name:
     ensure     => $service_ensure_real,
     enable     => $service_enable,
     hasrestart => false,
     hasstatus  => true,
-    provider   => 'init',
   }
 
 }
