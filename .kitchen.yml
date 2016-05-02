@@ -7,6 +7,9 @@ provisioner:
   modules_path: nevermind
   resolve_with_librarian_puppet: true
   require_chef_for_busser: true
+  require_puppet_repo: true
+  update_package_repos: true
+  require_puppet_collections: false
 
 platforms:
   - name: centos-6.5-64-puppet
@@ -22,6 +25,10 @@ platforms:
     driver_config:
       box: ubuntu-server-12042-x64-vbox4210
       box_url: http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box
+  - name: ubuntu/trusty64
+    driver_plugin: vagrant
+    driver_config:
+      box: ubuntu/trusty64
 
 suites:
   - name: go-server
