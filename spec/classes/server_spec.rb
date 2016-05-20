@@ -78,4 +78,14 @@ describe 'go::server' do
     }
   end
 
+  context 'with local_password_file => /some/file' do
+    let :params do {
+      :local_password_file => '/some/file'
+    } end
+    it { should compile }
+    it { should contain_concat('/some/file').with(
+      :ensure => 'present'
+    ) }
+  end
+
 end
