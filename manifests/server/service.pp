@@ -10,7 +10,7 @@ class go::server::service {
         ensure    => $::go::server::service_ensure,
         enable    => $::go::server::service_enable,
       }
-      if $::go::server::service_refresh {
+      if $::go::server::service_refresh and str2bool($::gocd_installed) {
         Service[$::go::server::params::service_name] {
           subscribe => [
             Class['::go::server::package'],

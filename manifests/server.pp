@@ -68,12 +68,49 @@
 #   SERVER_MAX_PERM_GEN settings, leave undef to use default in Go
 #   Valid values: string - sizeUNIT(ex 1G)
 #
+# [*local_auth_enable*]
+#   Adds local file authentication to cruise-config.xml
+#   Note that this does not handle teardown, setting a false value will only
+#   NOT manage the augeas resource
+#   Valid values: boolean
+#
 # [*local_password_file*]
 #   Manages the content of a password file in Go.
-#   Note that this current does not modify the cruise-config.xml to accept
-#   local password file authentication, that is expected to be handled manually
 #   Use the define go::server::local_account to manage individual user entries
 #   Valid values: undef or absolute path to file
+#
+# [*ldap_auth_enable*]
+#   Adds ldap authentication to cruise-config.xml
+#   Valid values: boolean
+#
+# [*ldap_uri*]
+#   If ldap_auth_enable, sets the ldap uri
+#   Valid values: string ldap uri
+#
+# [*ldap_manager_dn*]
+#   If ldap_auth_enable, sets the bind dn of the user doing ldap lookups
+#   Valid values: string ldap bind dn
+#
+# [*ldap_manager_password*]
+#   If ldap_auth_enable, sets the password of ldap_manager_dn doing ldap lookups
+#   Valid values: string cleartext password
+#
+# [*ldap_search_filter*]
+#   If ldap_auth_enable, sets the search filter for ldap when looking up users
+#   Valid values: string ldap search filter
+#
+# [*ldap_base_dn*]
+#   If ldap_auth_enable, sets the base dn when lookup up users
+#   Valid values: string ldap base dn
+#
+# [*install_augeas*]
+#   Boolean if augeas should be installed when managing one of autoregister,
+#   local_auth_enable or ldap_auth_enable.
+#   Valid values: boolean
+#
+# [*augeas_packages*]
+#   If install_augeas, provides a list of augeas packages to install
+#   Valid values: array string package names
 #
 # === Examples
 #
@@ -105,7 +142,17 @@ class go::server (
   $server_max_perm_gen  = undef,
   $autoregister         = false,
   $autoregister_key     = undef,
+  $encryption_cipher    = undef,
+  $local_auth_enable    = false,
   $local_password_file  = undef,
+  $ldap_auth_enable     = false,
+  $ldap_uri             = undef,
+  $ldap_manager_dn      = undef,
+  $ldap_manager_password = undef,
+  $ldap_search_filter   = '(sAMAccountName={0})',
+  $ldap_base_dn         = undef,
+  $install_augeas       = false,
+  $augeas_packages      = $::go::server::params::augeas_packages,
 ) inherits ::go::server::params {
 
   # input validation
@@ -113,6 +160,8 @@ class go::server (
   validate_re($service_ensure, ['running', 'stopped', 'unmanaged'], "Invalid service_ensure value ${service_ensure}. Valid values: running, stopped, unmanaged")
   validate_bool($service_enable)
   validate_bool($manage_package_repo)
+  validate_bool($ldap_auth_enable)
+  validate_bool($local_auth_enable)
 
   # input validation optional parameters
   $memory_regex = '[0-9]+[gGmMkK]'
@@ -128,8 +177,11 @@ class go::server (
   if $server_max_perm_gen {
     validate_re($server_max_perm_gen, $memory_regex, "Invalid server_max_perm_gen value ${server_max_perm_gen}. Leave it off or set to ${memory_regex}")
   }
-  if $local_password_file {
+  if $local_auth_enable or $local_password_file {
     validate_absolute_path($local_password_file)
+  }
+  if $ldap_auth_enable and !$encryption_cipher {
+    fail('Must provide encryption_cipher when configuring ldap authentication')
   }
 
   # module resources
@@ -140,9 +192,16 @@ class go::server (
       class { '::go::server::package': } ->
       class { '::go::server::file': } ->
       class { '::go::server::config': } ->
-      class { '::go::server::autoregister': } ->
       class { '::go::server::service': } ->
       anchor { '::go::server::end': }
+
+      if $autoregister or $ldap_auth_enable or $local_auth_enable {
+        Class['::go::server::service'] ->
+        class { '::go::server::wait_for_service': } ->
+        class { '::go::server::config::xml': } ->
+        Anchor['::go::server::end']
+      }
+
     }
     absent: {
       anchor { '::go::server::begin': } ->
