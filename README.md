@@ -18,12 +18,13 @@
 
 ## Overview
 
-The go module manages the life cycle of the continous delivery platform Go
+The go module manages the life cycle of the continuous delivery platform Go
 provided by Thoughtworks. It aims for self containment and only focus on solving tasks surrounding the Go product with minimal external dependencies.
 
 ## Module Description
 
 Thoughtworks Go is a continuous delivery platform used for build, packaging and orchestrating application deployments. Go uses a server component for the administration, presentation and scheduling part, and an agent component responsible for carrying out the work. The Go module manages these concerns within separate named spaced classes.
+
 ## Setup
 
 ### Setup Requirements
@@ -31,7 +32,7 @@ Thoughtworks Go is a continuous delivery platform used for build, packaging and 
 Go depends on JDK to be installed in order to run. This dependency must be managed outside of the Go module.
 See: http://www.thoughtworks.com/products/docs/go/current/help/system_requirements.html
 
-In addition, the Go module depends on functions provided by the puppetlabs-stdlib module
+In addition, the Go module depends on functions and resource types provided by the puppetlabs-stdlib module and the puppetlabs-concat module.
 
 ### Beginning with go
 
@@ -63,6 +64,7 @@ The Go module exposes the following classes
 It also exposes these defined types:
 
 * go::agent::instance
+* go::server::local_account
 
 The exposed classes are contained using the anchor pattern provided via puppetlabs-stdlib, thus you should be able to form reliable dependencies on these classes as expect all of its resources to be realized.
 
@@ -76,4 +78,18 @@ Tested and used on Redhat and Ubuntu. See metadata.json for supported OS combina
 
 ## Development
 
-Pull requests are welcome
+* Install development dependencies
+
+```
+$ bundle install
+```
+
+* Make changes
+* Run tests
+
+```
+$ bundle exec rake validate
+$ bundle exec rake spec
+```
+
+* Commit to feature branch and create pull request

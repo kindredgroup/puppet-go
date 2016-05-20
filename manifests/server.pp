@@ -68,6 +68,13 @@
 #   SERVER_MAX_PERM_GEN settings, leave undef to use default in Go
 #   Valid values: string - sizeUNIT(ex 1G)
 #
+# [*local_password_file*]
+#   Manages the content of a password file in Go.
+#   Note that this current does not modify the cruise-config.xml to accept
+#   local password file authentication, that is expected to be handled manually
+#   Use the define go::server::local_account to manage individual user entries
+#   Valid values: undef or absolute path to file
+#
 # === Examples
 #
 #   class { '::go::server':
@@ -97,7 +104,8 @@ class go::server (
   $server_min_perm_gen  = undef,
   $server_max_perm_gen  = undef,
   $autoregister         = false,
-  $autoregister_key     = undef
+  $autoregister_key     = undef,
+  $local_password_file  = undef,
 ) inherits ::go::server::params {
 
   # input validation
@@ -119,6 +127,9 @@ class go::server (
   }
   if $server_max_perm_gen {
     validate_re($server_max_perm_gen, $memory_regex, "Invalid server_max_perm_gen value ${server_max_perm_gen}. Leave it off or set to ${memory_regex}")
+  }
+  if $local_password_file {
+    validate_absolute_path($local_password_file)
   }
 
   # module resources
