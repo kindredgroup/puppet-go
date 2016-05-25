@@ -3,12 +3,13 @@ describe 'go::server' do
 
   context 'with defaults for all parameters' do
     it { should compile }
-    it {
-      should_not contain_file('/etc/defaults/go-server').with_content(/SERVER_MEM=/)
-      should_not contain_file('/etc/defaults/go-server').with_content(/SERVER_MAX_MEM=/)
-      should_not contain_file('/etc/defaults/go-server').with_content(/SERVER_MIN_PERM_GEN=/)
-      should_not contain_file('/etc/defaults/go-server').with_content(/SERVER_MAX_PERM_GEN=/)
-    }
+    it { should_not contain_file('/etc/defaults/go-server').with_content(/SERVER_MEM=/) }
+    it { should_not contain_file('/etc/defaults/go-server').with_content(/SERVER_MAX_MEM=/) }
+    it { should_not contain_file('/etc/defaults/go-server').with_content(/SERVER_MIN_PERM_GEN=/) }
+    it { should_not contain_file('/etc/defaults/go-server').with_content(/SERVER_MAX_PERM_GEN=/) }
+    it { should_not contain_class('go::server::config::xml') }
+    it { should_not contain_class('go::server::config::xml::dependencies') }
+    it { should_not contain_class('go::server::wait_for_service') }
   end
 
   context 'with ensure => absent' do
@@ -83,9 +84,48 @@ describe 'go::server' do
       :local_password_file => '/some/file'
     } end
     it { should compile }
-    it { should contain_concat('/some/file').with(
-      :ensure => 'present'
-    ) }
+    it { should contain_concat('/some/file').with_ensure('present') }
+    it { should_not contain_augeas('set_password_file_authentication') }
+  end
+
+  context 'with local_auth_enable => true and local_password_file => /some/file' do
+    let :params do {
+      :local_auth_enable   => true,
+      :local_password_file => '/some/file'
+    } end
+    it { should compile }
+    it { should contain_concat('/some/file').with_ensure('present') }
+    it { should contain_augeas('set_password_file_authentication') }
+  end
+
+  context 'with autoregister => true and autoregister_key => somekey' do
+    let :params do {
+      :autoregister     => true,
+      :autoregister_key => 'somekey'
+    } end
+    it { should compile }
+    it { should contain_augeas('set_cruise_autoregister').with_changes('set agentAutoRegisterKey somekey') }
+  end
+
+  context 'with ldap_auth_enable => true and no additional ldap config' do
+    let :params do {
+      :ldap_auth_enable => true,
+    } end
+    it { should_not compile }
+  end
+
+  context 'with ldap_auth_enable => true and all required parameters set' do
+    let :params do {
+      :encryption_cipher     => '123456',
+      :ldap_auth_enable      => true,
+      :ldap_uri              => 'ldap://ldapserver.company.com',
+      :ldap_manager_dn       => 'read@company.com',
+      :ldap_manager_password => 'readpassword',
+      :ldap_base_dn          => 'dc=company,dc=com',
+    } end
+    it { should compile }
+    it { should contain_class('go::server::config::xml') }
+    it { should contain_augeas('set_ldap_authentication') }
   end
 
 end

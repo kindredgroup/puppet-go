@@ -19,5 +19,11 @@ class go::server::params {
   $server_port = '8153'
   $server_ssl_port = '8154'
   $java_home = '/usr'
-  
+
+  $augeas_packages = $::osfamily ? {
+    redhat  => ['augeas', 'ruby-augeas'],
+    debian  => ['ruby-augeas'],
+    default => []
+  }
+
 }

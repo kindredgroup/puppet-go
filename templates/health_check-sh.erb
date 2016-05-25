@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# install curl non-intrusive for puppet
+<%- if @osfamily == 'RedHat' -%>
+rpm -qa|grep -qs curl || yum -y install curl
+<% elsif @osfamily == 'Debian' -%>
+dpkg -l|grep -qs curl || apt-get -y install curl
+<% end -%>
+
+USAGE="Usage: $0 [-h] [-r retries] [-u url] [-s sleep]"
+
+while getopts 'r:u:s:h' option; do
+  case "$option" in
+    h) usage
+      ;;
+    r) RETRIES=$OPTARG
+      ;;
+    u) URL=$OPTARG
+      ;;
+    s) SLEEP=$OPTARG
+      ;;
+    :) printf "missing argument for -%s\n" "$OPTARG" >&2
+       echo "$USAGE" >&2
+       exit 1
+       ;;
+   \?) printf "illegal option: -%s\n" "$OPTARG" >&2
+       echo "$USAGE" >&2
+       exit 1
+       ;;
+  esac
+done
+
+[ -z "$SLEEP" ] && SLEEP=10
+[ -z "$RETRIES" ] && RETRIES=5
+[ -z "$URL" ] && URL="http://localhost:8153"
+
+if [ "$RETRIES" = "0" ]; then
+  curl -f -q -s "$URL" >/dev/null
+  exit $?
+else
+  RV=0
+  TRIES=0
+  until curl -f -q -s $URL >/dev/null; do
+    RV=$?
+    ((TRIES++))
+    echo "Try ${TRIES} of ${RETRIES}. Curl exit code: ${RV}"
+    if [ "$TRIES" = "$RETRIES" ]; then
+      exit $RV
+    fi
+    sleep $SLEEP
+  done
+  exit $?
+fi

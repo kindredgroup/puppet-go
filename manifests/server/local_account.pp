@@ -30,10 +30,8 @@ define go::server::local_account (
   validate_string($username)
   validate_string($password)
 
-  # this alg seem to generate acceptable go password hashes
-  # https://docs.go.cd/current/configuration/dev_authentication.html#file-based-authentication
-  $password_hash = inline_template("<%- require 'base64'; require 'digest/sha1'; -%><%= Base64.encode64(Digest::SHA1.digest(@password)) %>")
-  $content_string = "${username}:${password_hash}"
+  $password_hash = gocd_password_hash($password)
+  $content_string = "${username}:${password_hash}\n"
 
   @concat::fragment { "go_password_file_user: ${username}":
     target  => $::go::server::file::local_password_file,

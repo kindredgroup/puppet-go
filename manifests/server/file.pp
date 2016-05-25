@@ -4,6 +4,7 @@
 #
 class go::server::file (
   $local_password_file = $::go::server::local_password_file,
+  $encryption_cipher   = $::go::server::encryption_cipher,
 ) {
 
   $directory_ensure = $::go::server::ensure ? {
@@ -51,6 +52,13 @@ class go::server::file (
     }
     if $password_file_ensure == present {
       Concat::Fragment <| tag == 'go::server::local_account' |>
+    }
+  }
+
+  if $encryption_cipher {
+    file { "${::go::server::config_directory}/cipher":
+      ensure  => $::go::server::ensure,
+      content => $encryption_cipher,
     }
   }
 
