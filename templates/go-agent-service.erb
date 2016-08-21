@@ -18,7 +18,7 @@ CUR_USER=`whoami`
 
 # LSB implimentation is not standard across distros, so we have to roll our own...
 killproc() {
-  pkill -u $USER -f "${INSTANCE_NAME}-running"
+  pkill -u $USER -f /usr/share/go-agent/agent-bootstrapper.jar
 }
 
 start_daemon() {
@@ -36,7 +36,7 @@ log_failure_msg() {
 . /etc/default/$INSTANCE_NAME
 
 check_proc() {
-    pgrep -u $USER -f "${INSTANCE_NAME}-running" > /dev/null
+    pgrep -u $USER -f /usr/share/go-agent/agent-bootstrapper.jar >/dev/null
 }
 
 start_go_agent() {

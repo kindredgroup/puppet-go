@@ -9,6 +9,69 @@ if [ "$PRODUCTION_MODE" == "Y" ]; then
     fi
 fi
 
+yell() {
+  echo "WARN: $*" >&2;
+}
+
+die() {
+    yell "FATAL: $1"
+    exit ${2:-1}
+}
+
+function autoDetectJavaExecutable() {
+  local java_cmd
+  # Prefer using GO_JAVA_HOME, over JAVA_HOME
+  GO_JAVA_HOME=${GO_JAVA_HOME:-"$JAVA_HOME"}
+
+  if [ -n "$GO_JAVA_HOME" ] ; then
+      if [ -x "$GO_JAVA_HOME/jre/sh/java" ] ; then
+          # IBM's JDK on AIX uses strange locations for the executables
+          java_cmd="$GO_JAVA_HOME/jre/sh/java"
+      else
+          java_cmd="$GO_JAVA_HOME/bin/java"
+      fi
+      if [ ! -x "$java_cmd" ] ; then
+          die "ERROR: GO_JAVA_HOME is set to an invalid directory: $GO_JAVA_HOME
+
+Please set the GO_JAVA_HOME variable in your environment to match the
+location of your Java installation."
+      fi
+  else
+      java_cmd="java"
+      command -v java >/dev/null 2>&1 || die "ERROR: GO_JAVA_HOME is not set and no 'java' command could be found in your PATH.
+
+Please set the GO_JAVA_HOME variable in your environment to match the
+location of your Java installation."
+  fi
+
+  echo "$java_cmd"
+}
+
+declare -a _stringToArgs
+function stringToArgsArray() {
+  _stringToArgs=("$@")
+}
+
+function autoDetectGoServerUrl() {
+  local url
+
+  if [[ ! -z "${GO_SERVER}" || ! -z "${GO_SERVER_PORT}" ]]; then
+    yell "The environment variable GO_SERVER and GO_SERVER_PORT has been deprecated in favor of GO_SERVER_URL. Please set GO_SERVER_URL instead to a https url (https://example.com:8154/go)"
+  fi
+
+  if [ -z "${GO_SERVER_URL}" ]; then
+    if [ -z "${GO_SERVER}" ]; then
+      url="https://127.0.0.1:8154/go"
+    else
+      url="https://${GO_SERVER}:8154/go"
+    fi
+  else
+    url="${GO_SERVER_URL}"
+  fi
+
+  echo "${url}"
+}
+
 CWD=`dirname "$0"`
 AGENT_DIR=`(cd "$CWD" && pwd)`
 
@@ -77,7 +140,20 @@ export AGENT_STARTUP_ARGS
 export LOG_DIR
 export LOG_FILE
 
-CMD="$JAVA_HOME/bin/java -jar \"$AGENT_DIR/agent-bootstrapper.jar\" $GO_SERVER $GO_SERVER_PORT <%= @name %>-running"
+UNZIP=$(which unzip)
+if [ -z "$UNZIP" ]; then
+  # default behavior if unzip is not installed
+  CMD="$JAVA_HOME/bin/java -jar \"$AGENT_DIR/agent-bootstrapper.jar\" $GO_SERVER $GO_SERVER_PORT <%= @name %>-running"
+else
+  GO_VERSION=$($UNZIP -c /usr/share/go-agent/agent-bootstrapper.jar META-INF/MANIFEST.MF|awk -F ':' '$1 ~ /^Go-Version/ { print $2 }'|tr -d '[[:space:]]')
+  GO_MAJ_VERSION=$(echo $GO_VERSION|cut -f 1 -d '.')
+  GO_MIN_VERSION=$(echo $GO_VERSION|cut -f 2 -d '.')
+  if [ "$GO_MAJ_VERSION" -le "16" ] && [ "$GO_MIN_VERSION" -le "6" ]; then
+    CMD="$JAVA_HOME/bin/java -jar \"$AGENT_DIR/agent-bootstrapper.jar\" $GO_SERVER $GO_SERVER_PORT <%= @name %>-running"
+  else
+    CMD="$JAVA_HOME/bin/java -jar \"$AGENT_DIR/agent-bootstrapper.jar\" -serverUrl \"$(autoDetectGoServerUrl)\""
+  fi
+fi
 
 echo "[`date`] Starting Go Agent Bootstrapper with command: $CMD" >>$LOG_FILE
 echo "[`date`] Starting Go Agent Bootstrapper in directory: $AGENT_WORK_DIR" >>$LOG_FILE
@@ -95,4 +171,3 @@ if [ "$DAEMON" == "Y" ]; then
 else
     eval "$CMD"
 fi
-

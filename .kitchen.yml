@@ -1,5 +1,7 @@
 ---
 driver:
+  customize:
+    memory: 1024
   name: vagrant
 
 provisioner:
@@ -10,26 +12,27 @@ provisioner:
   require_puppet_repo: true
   update_package_repos: true
   require_puppet_collections: false
+  #puppet_debug: true
 
 platforms:
-  - name: centos-6.5-64-puppet
+  - name: centos6
     driver_plugin: vagrant
     driver_config:
-      box: puppetlabs/centos-6.5-64-puppet
+      box: puppetlabs/centos-6.6-64-nocm
   - name: centos7
     driver_plugin: vagrant
     driver_config:
       box: centos/7
-  - name: vbox-ubuntu-server-12042
+  - name: ubuntu1204
     driver_plugin: vagrant
     driver_config:
-      box: ubuntu-server-12042-x64-vbox4210
-      box_url: http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box
-  - name: ubuntu/trusty64
+      box: puppetlabs/ubuntu-12.04-64-nocm
+  - name: ubuntu1404
     driver_plugin: vagrant
     driver_config:
-      box: ubuntu/trusty64
+      box: puppetlabs/ubuntu-14.04-64-nocm
 
 suites:
   - name: go-server
   - name: go-agent
+  - name: go-server-agent
