@@ -7,11 +7,11 @@ script:
   - bundle exec rake spec
 matrix:
   include:
-  - rvm: 1.9.3
+  - rvm: 2.1.6
     env: PUPPET_VERSION="= 3.7.3" DEPLOY="true"
-  - rvm: 1.9.3
+  - rvm: 2.1.6
     env: PUPPET_VERSION="= 3.7.3" FUTURE_PARSER="yes"
-  - rvm: 1.9.3
+  - rvm: 2.1.6
     env: PUPPET_VERSION="~> 4.0"
 deploy:
   provider: puppetforge
