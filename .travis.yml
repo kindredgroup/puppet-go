@@ -12,7 +12,7 @@ matrix:
   - rvm: 2.1.6
     env: PUPPET_VERSION="= 3.7.3" FUTURE_PARSER="yes"
   - rvm: 2.1.6
-    env: PUPPET_VERSION="~> 4.0"
+    env: PUPPET_VERSION="< 4.6.0"
 deploy:
   provider: puppetforge
   on:
