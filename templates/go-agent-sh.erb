@@ -148,7 +148,7 @@ else
   GO_VERSION=$($UNZIP -c /usr/share/go-agent/agent-bootstrapper.jar META-INF/MANIFEST.MF|awk -F ':' '$1 ~ /^Go-Version/ { print $2 }'|tr -d '[[:space:]]')
   GO_MAJ_VERSION=$(echo $GO_VERSION|cut -f 1 -d '.')
   GO_MIN_VERSION=$(echo $GO_VERSION|cut -f 2 -d '.')
-  if [ "$GO_MAJ_VERSION" -le "16" ]; then
+  if [ "$GO_MAJ_VERSION" -lt "16" ]; then
     CMD="$JAVA_HOME/bin/java -jar \"$AGENT_DIR/agent-bootstrapper.jar\" $GO_SERVER $GO_SERVER_PORT <%= @name %>-running"
   elif [ "$GO_MAJ_VERSION" -le "16" ] && [ "$GO_MIN_VERSION" -le "6" ]; then
     CMD="$JAVA_HOME/bin/java -jar \"$AGENT_DIR/agent-bootstrapper.jar\" $GO_SERVER $GO_SERVER_PORT <%= @name %>-running"
