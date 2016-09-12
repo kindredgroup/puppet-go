@@ -1,6 +1,9 @@
-Release 0.4.0
----
+## Release 0.4.1
+### Summary
 
+Fix release for https://github.com/unibet/puppet-go/issues/8
+
+## Release 0.4.0
 ### Summary
 
 First version using the changelog
