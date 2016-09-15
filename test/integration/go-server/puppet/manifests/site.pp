@@ -18,6 +18,7 @@ class { '::go::server':
   ldap_manager_password => 'readpassword',
   ldap_search_filter    => '(sAMAccountName={0})',
   ldap_base_dn          => 'dc=domain,dc=com',
+  enable_plugin_upload  => true,
 }
 
 ::go::server::local_account { 'a user':

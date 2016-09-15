@@ -153,6 +153,7 @@ class go::server (
   $ldap_base_dn         = undef,
   $install_augeas       = false,
   $augeas_packages      = $::go::server::params::augeas_packages,
+  $enable_plugin_upload = false,
 ) inherits ::go::server::params {
 
   # input validation
@@ -162,6 +163,7 @@ class go::server (
   validate_bool($manage_package_repo)
   validate_bool($ldap_auth_enable)
   validate_bool($local_auth_enable)
+  validate_bool($enable_plugin_upload)
 
   # input validation optional parameters
   $memory_regex = '[0-9]+[gGmMkK]'
