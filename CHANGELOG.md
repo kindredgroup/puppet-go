@@ -1,3 +1,8 @@
+## Release 0.5.0
+### Summary
+
+Allows uploading plugins from within the Go UI without restarting the server (class param go::server::enable_plugin_upload)
+
 ## Release 0.4.1
 ### Summary
 
