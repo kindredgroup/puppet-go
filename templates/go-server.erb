@@ -24,3 +24,7 @@ export SERVER_MAX_PERM_GEN
 DAEMON=Y
 JAVA_HOME=<%= @java_home %>
 export JAVA_HOME
+<%- if @enable_plugin_upload == true -%>
+GO_SERVER_SYSTEM_PROPERTIES='-Dgo.plugin.upload.enabled=true -DpluginLocationMonitor.sleepTimeInSecs=3'
+export GO_SERVER_SYSTEM_PROPERTIES
+<%- end -%>

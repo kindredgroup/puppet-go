@@ -128,4 +128,12 @@ describe 'go::server' do
     it { should contain_augeas('set_ldap_authentication') }
   end
 
+  context 'with enable_plugin_upload => true' do
+    let :params do {
+      :enable_plugin_upload => true,
+    } end
+    it { should compile }
+    it { should contain_file('/etc/default/go-server').with_content(/GO_SERVER_SYSTEM_PROPERTIES=/) }
+  end
+
 end

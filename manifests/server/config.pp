@@ -12,7 +12,8 @@ class go::server::config (
   $server_max_perm_gen  = $::go::server::server_max_perm_gen,
   $java_home            = $::go::server::java_home,
   $autoregister         = $::go::server::autoregister,
-  $autoregister_key     = $::go::server::autoregister_key
+  $autoregister_key     = $::go::server::autoregister_key,
+  $enable_plugin_upload = $::go::server::enable_plugin_upload,
 ) {
 
   file { $::go::server::params::default_file:
