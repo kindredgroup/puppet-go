@@ -91,6 +91,7 @@ define go::agent::instance (
   $autoregister_key       = undef,
   $autoregister_resources = undef,
   $autoregister_env       = undef,
+  $autoregister_hostname  = $name,
   $manage_user            = true,
   $service_ensure         = 'running',
   $service_enable         = true,
