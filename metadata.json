@@ -1,6 +1,6 @@
 {
   "name": "unibet-go",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "author": "unibet",
   "summary": "Puppet module to manage Thoughtworks Go server and agent",
   "license": "Apache-2.0",
