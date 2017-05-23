@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-puppetversion = ENV.key?('PUPPET_VERSION') ? ENV['PUPPET_VERSION'] : '3.7.3'
+puppetversion = ENV.key?('PUPPET_VERSION') ? ENV['PUPPET_VERSION'] : '3.8.7'
 
 group :rspec, :kitchen do
   gem 'librarian-puppet', '2.1.0'
