@@ -8,9 +8,9 @@ script:
 matrix:
   include:
   - rvm: 2.1.6
-    env: PUPPET_VERSION="= 3.7.3" DEPLOY="true"
+    env: PUPPET_VERSION="= 3.8.7" DEPLOY="true"
   - rvm: 2.1.6
-    env: PUPPET_VERSION="= 3.7.3" FUTURE_PARSER="yes"
+    env: PUPPET_VERSION="= 3.8.7" FUTURE_PARSER="yes"
   - rvm: 2.1.6
     env: PUPPET_VERSION="< 4.6.0"
 deploy:
