@@ -45,6 +45,10 @@
 #   Environment that go agent will belong to. Leave unset for no environment
 #   Valid values: string - environment name
 #
+# [*autoregister_hostname*]
+#   The name that you want to display on the server
+#   Valid values: string - agent name
+#
 # [*manage_user*]
 #   If the instance user and home directory should be managed
 #   Valid values: boolean
@@ -91,7 +95,7 @@ define go::agent::instance (
   $autoregister_key       = undef,
   $autoregister_resources = undef,
   $autoregister_env       = undef,
-  $autoregister_hostname  = $name,
+  $autoregister_hostname  = undef,
   $manage_user            = true,
   $service_ensure         = 'running',
   $service_enable         = true,
