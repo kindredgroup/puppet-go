@@ -88,7 +88,6 @@
 define go::agent::instance (
   $path,
   $go_server_host,
-  $go_server_port,
   $mode                   = '0755',
   $java_home              = '/usr',
   $autoregister           = false,
@@ -136,6 +135,19 @@ define go::agent::instance (
   $user = $name
   $home = "${path}/${name}"
   $work_dir = "${home}/go-agent"
+
+  file { "${work_dir}/config/agent-bootstrapper-logback.xml":
+    ensure => $ensure,
+    owner  => $::go::server::params::user,
+    group  => $::go::server::params::group,
+    mode   => '0644'
+  }
+  file { "${work_dir}/config/agent-launcher-logback.xml":
+    ensure => $ensure,
+    owner  => $::go::server::params::user,
+    group  => $::go::server::params::group,
+    mode   => '0644'
+  }
 
   if $manage_user {
     exec { "create_parent_dir_${name}":

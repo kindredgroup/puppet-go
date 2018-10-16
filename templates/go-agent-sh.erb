@@ -56,7 +56,7 @@ function autoDetectGoServerUrl() {
   local url
 
   if [[ ! -z "${GO_SERVER}" || ! -z "${GO_SERVER_PORT}" ]]; then
-    yell "The environment variable GO_SERVER and GO_SERVER_PORT has been deprecated in favor of GO_SERVER_URL. Please set GO_SERVER_URL instead to a https url (https://example.com:8154/go)"
+    yell "The environment variable GO_SERVER and GO_SERVER_PORT has been deprecated in favor of GO_SERVER_URL. Please set GO_SERVER_URL instead to a https url (https://example.com:8154/go) ${GO_SERVER_PORT} ${GO_SERVER}"
   fi
 
   if [ -z "${GO_SERVER_URL}" ]; then
@@ -77,8 +77,6 @@ AGENT_DIR=`(cd "$CWD" && pwd)`
 
 AGENT_MEM=${AGENT_MEM:-"128m"}
 AGENT_MAX_MEM=${AGENT_MAX_MEM:-"256m"}
-GO_SERVER=${GO_SERVER:-"127.0.0.1"}
-GO_SERVER_PORT=${GO_SERVER_PORT:-"8153"}
 JVM_DEBUG_PORT=${JVM_DEBUG_PORT:-"5006"}
 VNC=${VNC:-"N"}
 

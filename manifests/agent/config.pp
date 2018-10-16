@@ -3,4 +3,5 @@
 # Placeholder
 #
 class go::agent::config {
+
 }
