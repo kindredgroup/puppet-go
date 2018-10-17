@@ -41,6 +41,7 @@ else
   RV=0
   TRIES=0
   until curl -f -q -s $URL >/dev/null; do
+    echo "Trying service:"$TRIES
     RV=$?
     ((TRIES++))
     echo "Try ${TRIES} of ${RETRIES}. Curl exit code: ${RV}"

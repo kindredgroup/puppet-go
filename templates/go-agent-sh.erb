@@ -56,7 +56,7 @@ function autoDetectGoServerUrl() {
   local url
 
   if [[ ! -z "${GO_SERVER}" || ! -z "${GO_SERVER_PORT}" ]]; then
-    yell "The environment variable GO_SERVER and GO_SERVER_PORT has been deprecated in favor of GO_SERVER_URL. Please set GO_SERVER_URL instead to a https url (https://example.com:8154/go)"
+    yell "The environment variable GO_SERVER and GO_SERVER_PORT has been deprecated in favor of GO_SERVER_URL. Please set GO_SERVER_URL instead to a https url (https://example.com:8154/go) ${GO_SERVER_PORT} ${GO_SERVER}"
   fi
 
   if [ -z "${GO_SERVER_URL}" ]; then
@@ -77,8 +77,6 @@ AGENT_DIR=`(cd "$CWD" && pwd)`
 
 AGENT_MEM=${AGENT_MEM:-"128m"}
 AGENT_MAX_MEM=${AGENT_MAX_MEM:-"256m"}
-GO_SERVER=${GO_SERVER:-"127.0.0.1"}
-GO_SERVER_PORT=${GO_SERVER_PORT:-"8153"}
 JVM_DEBUG_PORT=${JVM_DEBUG_PORT:-"5006"}
 VNC=${VNC:-"N"}
 
@@ -157,9 +155,9 @@ else
   fi
 fi
 
-echo "[`date`] Starting Go Agent Bootstrapper with command: $CMD" >>$LOG_FILE
-echo "[`date`] Starting Go Agent Bootstrapper in directory: $AGENT_WORK_DIR" >>$LOG_FILE
-echo "[`date`] AGENT_STARTUP_ARGS=$AGENT_STARTUP_ARGS" >>$LOG_FILE
+echo "[`date`] Starting Go Agent Bootstrapper with command: $CMD" >> $LOG_FILE
+echo "[`date`] Starting Go Agent Bootstrapper in directory: $AGENT_WORK_DIR" >> $LOG_FILE
+echo "[`date`] AGENT_STARTUP_ARGS=$AGENT_STARTUP_ARGS" >> $LOG_FILE
 cd "$AGENT_WORK_DIR"
 
 if [ "$JAVA_HOME" == "" ]; then
@@ -168,8 +166,8 @@ if [ "$JAVA_HOME" == "" ]; then
 fi
 
 if [ "$DAEMON" == "Y" ]; then
-    eval "nohup $CMD >>$LOG_FILE &"
+    eval "nohup $CMD > $LOG_FILE 2>&1 &"
     echo $! >$PID_FILE
 else
-    eval "$CMD"
+    eval "$CMD >>$LOG_FILE"
 fi
