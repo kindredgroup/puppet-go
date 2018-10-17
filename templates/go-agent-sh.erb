@@ -155,9 +155,9 @@ else
   fi
 fi
 
-echo "[`date`] Starting Go Agent Bootstrapper with command: $CMD" >>$LOG_FILE
-echo "[`date`] Starting Go Agent Bootstrapper in directory: $AGENT_WORK_DIR" >>$LOG_FILE
-echo "[`date`] AGENT_STARTUP_ARGS=$AGENT_STARTUP_ARGS" >>$LOG_FILE
+echo "[`date`] Starting Go Agent Bootstrapper with command: $CMD" >> $LOG_FILE
+echo "[`date`] Starting Go Agent Bootstrapper in directory: $AGENT_WORK_DIR" >> $LOG_FILE
+echo "[`date`] AGENT_STARTUP_ARGS=$AGENT_STARTUP_ARGS" >> $LOG_FILE
 cd "$AGENT_WORK_DIR"
 
 if [ "$JAVA_HOME" == "" ]; then
@@ -166,8 +166,8 @@ if [ "$JAVA_HOME" == "" ]; then
 fi
 
 if [ "$DAEMON" == "Y" ]; then
-    eval "nohup $CMD >>$LOG_FILE &"
+    eval "nohup $CMD > $LOG_FILE 2>&1 &"
     echo $! >$PID_FILE
 else
-    eval "$CMD"
+    eval "$CMD >>$LOG_FILE"
 fi

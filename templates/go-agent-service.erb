@@ -15,6 +15,7 @@ INSTANCE_NAME="<%= @name -%>"
 PID_DIR="/var/run/<%= @name %>"
 PID_FILE="/var/run/<%= @name %>/go-agent.pid"
 CUR_USER=`whoami`
+LOG_FILE=$AGENT_WORK_DIR/go-agent-launcher.log
 
 # LSB implimentation is not standard across distros, so we have to roll our own...
 killproc() {
