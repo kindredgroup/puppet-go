@@ -88,7 +88,6 @@
 define go::agent::instance (
   $path,
   $go_server_host,
-  $go_server_port,
   $mode                   = '0755',
   $java_home              = '/usr',
   $autoregister           = false,
