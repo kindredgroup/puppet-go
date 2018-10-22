@@ -24,21 +24,6 @@ class go::server::config (
     content => template("${module_name}/go-server.erb")
   }
 
-  if $::go::server::ensure == present {
-    file_line { 'log_directory_server':
-      path  => "${::go::server::config_directory}/log4j.properties",
-      line  => "log4j.appender.FileAppender.File=${::go::server::log_directory}/go-server.log",
-      match => '^log4j.appender.FileAppender.File='
-    }
-
-    file_line { 'log_directory_shine':
-      path  => "${::go::server::config_directory}/log4j.properties",
-      line  => "log4j.appender.ShineFileAppender.File=${::go::server::log_directory}/go-server.log",
-      match => '^log4j.appender.ShineFileAppender.File='
-    }
-
-  }
-
   if !$::go::server::manage_user {
     file { '/var/go':
       ensure => directory,
